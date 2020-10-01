@@ -1,5 +1,4 @@
-# table-view
-
+# ecomerce
 ## Project setup
 ```
 npm install
