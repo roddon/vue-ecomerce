@@ -3,12 +3,12 @@
         <v-row>
             <v-col class="col-6">
                 <div style="font-size: 18px;">
-                    Pack de {{ number }} {{ title }}
+                    Pack de {{ category.number }} {{ category.title }}
                 </div>
             </v-col>
             <v-col class="col-4" style="color: red; text-align: right;">
                 <div style="font-size: 25px;">
-                    {{ price }} &euro;
+                    {{ category.price }} &euro;
                 </div>
             </v-col>
             <v-col class="col-2">
@@ -22,10 +22,10 @@
 <script>
     export default {
         name: 'ShoppingItem',
-        props: ['title', 'number', 'price'],
+        props: ['category'],
         methods: {
             deleteItem(){
-                this.$emit('DeleteItem', this.title, this.number)
+                this.$emit('DeleteItem', this.category)
             }
         }
     }

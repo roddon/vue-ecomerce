@@ -10,8 +10,6 @@
                 class="grey lighten-5 mb-6"
             >
                 <v-row
-                    :align="align"
-                    no-gutters
                 >
                     <v-col class="number">
                         221
@@ -24,8 +22,6 @@
                     </v-col>
                 </v-row>
                 <v-row
-                    :align="align"
-                    no-gutters
                 >
                     <v-col>
                         Posts
@@ -103,15 +99,15 @@
             <div class="mt-4">
                 Aumentar engagement
             </div>
-            <div class="d-flex justify-space-around align-items-center m-4">
+            <div class="d-flex justify-space-around m-4">
                 <i class="fa fa-heart-o other-icon"></i>
                 <SpinInput/>
             </div>
-            <div class="d-flex justify-space-around align-items-center m-4">
+            <div class="d-flex justify-space-around m-4">
                 <i class="fa fa-heart-o other-icon"></i>
                 <SpinInput/>
             </div>
-            <div class="d-flex justify-space-around align-items-center m-4">
+            <div class="d-flex justify-space-around m-4">
                 <i class="fa fa-heart-o other-icon"></i>
                 <SpinInput/>
             </div>

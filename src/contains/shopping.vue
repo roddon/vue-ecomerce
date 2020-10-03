@@ -38,8 +38,13 @@
                 key="1"
                 value="shopping-tab-1"
             >
-                <ShoppingItem title="Likes" number="300" price="399" @DeleteItem = "deleteItem"/>
-                <ShoppingContinue price="1698" @ClickContinue="clickContinue"/>
+                <ShoppingItem 
+                    v-for="(item, index) in getBasket"
+                    :key="index"
+                    :category="item" 
+                    @DeleteItem = "deleteItem"
+                />
+                <ShoppingContinue :price="getTotalPrice" @ClickContinue="clickContinue"/>
             </v-tab-item>
             <v-tab-item
                 key="2"
@@ -80,7 +85,7 @@
                         <UserInput title="Opcional" placeholder="Nombre y apellidos"/>
                     </div>
                 </div>
-                <ShoppingContinue price="1698" @ClickContinue="clickContinue"/>
+                <ShoppingContinue :price="getTotalPrice" @ClickContinue="clickContinue"/>
             </v-tab-item>
             <v-tab-item
                 key="3"
@@ -122,6 +127,7 @@
     import ShoppingItem from '../components/ShoppingItem';
     import ShoppingContinue from '../components/ShoppingContinue';
     import UserInput from '../components/UserInput';
+    import {GET_BASKET, REMOVE_BASKET} from '@/store/storeTypes'
 
     export default {
         name: 'Shopping',
@@ -131,8 +137,8 @@
             UserInput,
         },
         methods : {
-            deleteItem(title, number) {
-                console.log('delete'+title+number)
+            deleteItem(category) {
+                this.$store.commit(REMOVE_BASKET, category.id)
             },
             clickContinue(){
                 console.log('continue')
@@ -145,6 +151,19 @@
             },
             clickFinish(){
                 console.log('end')
+            }
+        },
+        computed : {
+            getBasket : function(){
+                return this.$store.getters[GET_BASKET]
+            },
+            getTotalPrice : function(){
+                let basket = this.$store.getters[GET_BASKET]
+                let total = 0
+                basket.forEach(item => {
+                    total += item.price
+                })
+                return total
             }
         },
         data () {
