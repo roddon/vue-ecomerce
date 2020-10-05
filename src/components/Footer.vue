@@ -4,7 +4,7 @@
             <router-link to="/">
                 <i class="fa fa-home"></i>
             </router-link>
-            <router-link to="/">
+            <router-link to="/search">
                 <i class="fa fa-search"></i>
             </router-link>
             <router-link to="/category">

@@ -1,10 +1,10 @@
 <template>
-    <div style="padding: 20px;">
-        <h5 style="padding-bottom: 20px;">
+    <div style="min-height: 500px;">
+        <h5 style="padding: 20px;">
             <i class="fa fa-arrow-left" style="color: black;"></i>
             Nickname
         </h5>
-        <div class="d-flex">
+        <div class="d-flex" style="padding:20px">
             <img class="avatar" src="avatar.jpeg" alt="avatar">
             <v-container
                 class="grey lighten-5 mb-6"
@@ -41,90 +41,52 @@
             </p>
             <SpinInput/>
         </div>
-        <div style="padding: 10px 0;">
-            <v-toolbar flat>
-                <v-tabs
-                    v-model="tabs"
-                    fixed-tabs
-                >
-                <v-tabs-slider></v-tabs-slider>
-                <v-tab
-                    href="#mobile-tabs-5-1"
-                    class="tab-text"
-                >
-                    <i class="fa fa-table tab-icon"></i>
-                </v-tab>
-        
-                <v-tab
-                    href="#mobile-tabs-5-2"
-                    class="tab-text"
-                >
-                    <i class="fa fa-table tab-icon"></i>
-                </v-tab>
-        
-                <v-tab
-                    href="#mobile-tabs-5-3"
-                    class="tab-text"
-                >
-                    <i class="fa fa-table tab-icon"></i>
-                </v-tab>
-                </v-tabs>
-            </v-toolbar>
-        
-            <v-tabs-items v-model="tabs">
-                <v-tab-item
-                    v-for="i in 3"
-                    :key="i"
-                    :value="'mobile-tabs-5-' + i"
-                >
-                   <img class="img-fluid" src="image.png" alt="">
-                </v-tab-item>
-            </v-tabs-items>
-        </div>
-        <div style="padding: 10px;">
-            <div>
-                <i class="fa fa-heart-o other-icon"></i>
-                <i class="fa fa-heart-o other-icon"></i>
-                <i class="fa fa-heart-o other-icon"></i>
-                <i class="fa fa-heart-o other-icon float-right"></i>
-            </div>
-            <div>
-                34Likes
-            </div>
-            <div>
-                Ver los 2 comentanos
-            </div>
-        </div>
-        <div class="text-center">
-            <div class="mt-4">
-                Aumentar engagement
-            </div>
-            <div class="d-flex justify-space-around m-4">
-                <i class="fa fa-heart-o other-icon"></i>
-                <SpinInput/>
-            </div>
-            <div class="d-flex justify-space-around m-4">
-                <i class="fa fa-heart-o other-icon"></i>
-                <SpinInput/>
-            </div>
-            <div class="d-flex justify-space-around m-4">
-                <i class="fa fa-heart-o other-icon"></i>
-                <SpinInput/>
-            </div>
-        </div>
+        <div class="posts-scroll my-3">
+            <Post 
+                v-for="(item, index) in getPosts.posts"
+                :key="index"
+                :data=item.node
+            />
+        </div>      
     </div>
 </template>
 <script>
     import SpinInput from '../components/SpinInput';
+    import Post from '../components/Post'
+    import {LOAD_POSTS, LOAD_PROFILE, GET_PROFILE, GET_POSTS} from '@/store/storeTypes'
 
     export default {
         name: 'Profile',
         components: {
-            SpinInput
+            SpinInput,
+            Post
         },
-        data: () => ({
-            tabs: null
-        })
+        methods: {
+            // instagramId:22686243, first:20, endCursor:''
+            loadPosts(instagramId, first, endCursor){
+                this.$store.dispatch(LOAD_POSTS, {instagramId, first, endCursor})
+            },
+            loadProfile(nickname){//'gramupy1'
+                console.log('profile page loadProfile')
+                this.$store.dispatch(LOAD_PROFILE, nickname)
+            }
+        },
+        computed: {
+            getProfile: function(){
+                console.log('profile getprofile function')
+                let profile = this.$store.getters[GET_PROFILE]
+                console.log(profile)
+                return profile
+            },
+            getPosts: function(){
+                let posts = this.$store.getters[GET_POSTS]
+                return posts
+            }
+        },
+        mounted() {
+            this.loadProfile('gramupy1')
+            this.loadPosts(22686243, 12, '')
+        }
     };
 </script>
 <style>
@@ -144,5 +106,13 @@
         color: black;
         font-size: 30px;
         padding: 0 5px;
+    }
+    .posts-scroll{
+        height: 400px;
+        overflow-x: hidden; /* Hide horizontal scrollbar */
+        overflow-y: scroll; /* Add vertical scrollbar */
+    }
+    .posts-scroll::-webkit-scrollbar{
+        width: 0 !important;
     }
 </style>

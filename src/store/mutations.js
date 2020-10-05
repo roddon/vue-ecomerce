@@ -1,4 +1,5 @@
-import { SAVE_TOKEN, INSERT_BASKET, SAVE_BASKET, REMOVE_BASKET } from './storeTypes'
+import { SAVE_TOKEN, INSERT_BASKET, SAVE_BASKET, REMOVE_BASKET, 
+    LOAD_PROFILE, LOAD_POSTS} from './storeTypes'
 
 export default {
     [SAVE_TOKEN] (state, {token}) {
@@ -17,5 +18,11 @@ export default {
         // Insert category id in basket
         let basket = state.basket
         state.basket.splice(basket.indexOf(id), 1);
+    },
+    [LOAD_PROFILE] (state, profile) {
+        state.profile = profile
+    },
+    [LOAD_POSTS] (state, posts) {
+        state.posts = posts
     }
 }

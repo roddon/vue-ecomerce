@@ -71,7 +71,7 @@
                 console.log('more info'+category)
             },
             buyNow(category) {
-                this.$store.commit(INSERT_BASKET, category.id)
+                this.$store.dispatch(INSERT_BASKET, category.id)
                 this.$router.push('/shopping')
             }
         },

@@ -1,4 +1,5 @@
-import { GET_TOKEN, GET_BASKET, GET_CATEGORYS, GET_TITLES } from './storeTypes'
+import { GET_TOKEN, GET_BASKET, GET_CATEGORYS, GET_TITLES, 
+    GET_PROFILE, GET_POSTS } from './storeTypes'
 
 export default {
     [GET_TOKEN] (state) {
@@ -15,5 +16,11 @@ export default {
     },
     [GET_TITLES] (state) {
         return state.titles
+    },
+    [GET_PROFILE] (state) {
+        return state.profile
+    },
+    [GET_POSTS] (state) {
+        return state.posts
     }
 }

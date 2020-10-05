@@ -25,7 +25,9 @@ const store = new Vuex.Store({
             { id: 11, title: 'comment', number: 1000, price: 799},
             { id: 12, title: 'comment', number: 3000, price: 1999},
         ],
-        basket:[]
+        basket:[],
+        profile:[],
+        posts:[]
     },
     actions,
     mutations,

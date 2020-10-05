@@ -4,6 +4,7 @@ import Home from '../contains/home.vue';
 import Profile from '../contains/profile.vue';
 import Category from '../contains/category.vue';
 import Shopping from '../contains/shopping.vue';
+import Search from '../contains/search.vue';
 
 Vue.use(VueRouter)
 
@@ -22,5 +23,6 @@ export default new VueRouter({
       {path: '/profile', component: Profile},
       {path: '/category', component: Category},
       {path: '/shopping', component: Shopping},
+      {path: '/search', component: Search},
     ]
   })
