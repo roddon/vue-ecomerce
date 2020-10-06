@@ -53,6 +53,16 @@
                     @BuyNow = "buyNow"
                 />
                 <hr>
+                <div v-if="isMoreDetail == true" class="m-4">
+                    <h5>
+                        Details:
+                    </h5>
+                    As you can see, we will show rows with:
+                    Product name – Price
+                    more info – button Buy now
+                    If user clicks on more info, you can show the
+                    expanded box showing Product details
+                </div>
             </v-tab-item>
         </v-tabs-items>
     </div>
@@ -69,6 +79,7 @@
         methods : {
             moreInfo(category) {
                 console.log('more info'+category)
+                this.isMoreDetail = !this.isMoreDetail
             },
             buyNow(category) {
                 this.$store.dispatch(INSERT_BASKET, category.id)
@@ -86,6 +97,7 @@
         data () {
             return {
             tabs: null, 
+            isMoreDetail: false
         }
       },
     }

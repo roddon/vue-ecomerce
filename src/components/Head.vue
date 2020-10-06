@@ -1,7 +1,9 @@
 <template>
     <div class="head">
         <v-row class="justify-space-between">
-            <img alt="Logo" class="logo" src="/logo.png"/>
+            <router-link to="/">
+                <img alt="Logo" class="logo" src="/logo.png"/>
+            </router-link>
             <div class="text-right">
                 <v-menu
                     close-on-content-click
@@ -24,7 +26,11 @@
                         v-for="(item, index) in items"
                         :key="index"
                         >
-                        <v-list-item-title style="color:white; cursor: pointer;">{{ item.title }}</v-list-item-title>
+                        <v-list-item-title >
+                            <router-link :to="item.to" style="color:white; text-decoration:none;">
+                                {{ item.title }}
+                            </router-link>
+                        </v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </v-menu>
@@ -36,10 +42,10 @@
     export default {
         data: () => ({
             items: [
-            { title: 'Mi perfil' },
-            { title: 'Mis pedidos' },
-            { title: 'Mis solicitudes' },
-            { title: 'Cerrar sesion' },
+            { title: 'Mi perfil', to: '/profile' },
+            { title: 'Mis pedidos', to: '/shopping' },
+            { title: 'Mis solicitudes', to: ''},
+            { title: 'Cerrar sesion', to: '' },
             ]
         })
     }

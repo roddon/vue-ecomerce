@@ -22,11 +22,14 @@ export default {
 
     [LOAD_PROFILE] (context, nickname) {
         console.log('action first profile'+nickname)
-        return getProfile(nickname)
-            .then(function(profile) {
-                console.log('action result profile')
-                context.commit(LOAD_PROFILE, profile)
-            })
+        return new Promise(resolve => {
+            getProfile(nickname)
+                .then(function(profile) {
+                    console.log('action result profile')
+                    context.commit(LOAD_PROFILE, profile)
+                    resolve(profile)
+                })
+        })
     },
 
     [LOAD_POSTS] (context, {instagramId, first, endCursor}) {

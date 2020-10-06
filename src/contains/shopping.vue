@@ -1,9 +1,12 @@
 <template>
     <div>
         <v-toolbar>
-            <h5 style="padding: 20px;">
-                Catalogo de packs
-            </h5>
+            <router-link to="/category" style="color: black; text-decoration: none;">
+                <h5>
+                    <i class="fa fa-arrow-left" style="color: black;"></i>
+                    Proceso de compra
+                </h5>
+            </router-link>
             <template v-slot:extension>
                 <v-tabs
                     v-model="tabs"

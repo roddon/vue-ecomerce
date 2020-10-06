@@ -1,24 +1,26 @@
 <template>
     <div style="min-height: 500px;">
-        <h5 style="padding: 20px;">
-            <i class="fa fa-arrow-left" style="color: black;"></i>
-            Nickname
-        </h5>
+        <router-link to="/search" style="color: black; text-decoration: none;">
+            <h5 style="padding: 20px">
+                <i class="fa fa-arrow-left" style="color: black;"></i>
+                {{ getProfile.profile.username }}
+            </h5>
+        </router-link>
         <div class="d-flex" style="padding:20px">
-            <img class="avatar" src="avatar.jpeg" alt="avatar">
+            <img class="avatar" :src="getProfile.profile.profile_pic_url" alt="avatar">
             <v-container
                 class="grey lighten-5 mb-6"
             >
                 <v-row
                 >
                     <v-col class="number">
-                        221
+                        {{ getProfile.profile.posts }}
                     </v-col>
                     <v-col class="number" style="color: red;">
-                        12390
+                        {{ getProfile.profile.edge_follow }}
                     </v-col>
                     <v-col class="number">
-                        1123
+                        {{ getProfile.profile.edge_followed_by }}
                     </v-col>
                 </v-row>
                 <v-row
@@ -53,7 +55,7 @@
 <script>
     import SpinInput from '../components/SpinInput';
     import Post from '../components/Post'
-    import {LOAD_POSTS, LOAD_PROFILE, GET_PROFILE, GET_POSTS} from '@/store/storeTypes'
+    import {GET_PROFILE, GET_POSTS} from '@/store/storeTypes'
 
     export default {
         name: 'Profile',
@@ -62,20 +64,23 @@
             Post
         },
         methods: {
-            // instagramId:22686243, first:20, endCursor:''
-            loadPosts(instagramId, first, endCursor){
-                this.$store.dispatch(LOAD_POSTS, {instagramId, first, endCursor})
-            },
-            loadProfile(nickname){//'gramupy1'
-                console.log('profile page loadProfile')
-                this.$store.dispatch(LOAD_PROFILE, nickname)
-            }
         },
         computed: {
             getProfile: function(){
                 console.log('profile getprofile function')
                 let profile = this.$store.getters[GET_PROFILE]
                 console.log(profile)
+                if(Object.keys(profile).length == 0){
+                    profile['profile'] = {}
+                    profile['profile']['username'] = 'Nickname'
+                    profile['profile']['profile_pic_url'] = 'https://as2.ftcdn.net/jpg/03/32/59/65/500_F_332596535_lAdLhf6KzbW6PWXBWeIFTovTii1drkbT.jpg'
+                    profile['profile']['posts'] = '0'
+                    profile['profile']['edge_follow'] = '0'
+                    profile['profile']['edge_followed_by'] = '0'
+                }
+                else{
+                    console.log('no posts')
+                }
                 return profile
             },
             getPosts: function(){
@@ -84,8 +89,10 @@
             }
         },
         mounted() {
-            this.loadProfile('gramupy1')
-            this.loadPosts(22686243, 12, '')
+        },
+        data () {
+            return {
+            }
         }
     };
 </script>

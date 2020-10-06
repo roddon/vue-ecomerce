@@ -8,9 +8,9 @@
                 <i class="fa fa-search"></i>
             </router-link>
             <router-link to="/category">
-                <i class="fa fa-heart-o" style="font-size:30px"></i>
+                <i class="fa fa-shopping-bag" style="font-size:30px"></i>
             </router-link>
-            <router-link to="/">
+            <router-link to="/shopping">
                 <i class="fa fa-heart-o"></i>
             </router-link>
             <router-link to="/profile">

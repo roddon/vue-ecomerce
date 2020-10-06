@@ -15,58 +15,38 @@ class InstagramProfile {
 	// Get profile with post lists || Dona error not-logged-in
 	getProfile() {
 
-		var url = 'https://www.instagram.com/' + this.nickname; // + '/?__a=1';
+		var url = 'https://www.instagram.com/' + this.nickname + '/?__a=1';
 
 		// return new Promise(function(resolve, reject) {
 		return new Promise(function(resolve) {
 
 			// axios.get(url, function(html, status) {
+			var object = {};
             axios.get(url)
-                .then( html=> {
-
-				//console.log(html);
-
-				// Init
-				var object = {};
-				var posts = [];
-				
-				// Option 1, GET full page and Parse
-				// https://www.instagram.com/profile
-				var regex = new RegExp(/<script type="text\/javascript">window\._sharedData = (.*)<\/script>/);
-				var jsonTxt = regex.exec(html)
-				jsonTxt = jsonTxt[1].slice(0, -1)
-				const userInfo = JSON.parse(jsonTxt)
-				const mediaArray = userInfo.entry_data.ProfilePage[0].graphql.user.edge_owner_to_timeline_media.edges.splice(0, 100)
-
-				// Option 2, We can get directly the instagram json
-				// https://www.instagram.com/profile/?__a=1
-				// var json = JSON.parse(html);
-
-				for (let media of mediaArray) {
-					posts.push(media.node)
-				}
-
-				//console.log(userInfo);
+                .then( json => {
 
 				// Init response
 				object['profile'] = {};
-				object['profile'] ['id_instagram'] = userInfo.entry_data.ProfilePage[0].graphql.user.id;
-				object['profile'] ['posts'] = userInfo.entry_data.ProfilePage[0].graphql.user.edge_owner_to_timeline_media.count;
-				object['profile'] ['biography'] = userInfo.entry_data.ProfilePage[0].graphql.user.biography;
-				object['profile'] ['external_url'] = userInfo.entry_data.ProfilePage[0].graphql.user.external_url;
-				object['profile'] ['edge_followed_by'] = userInfo.entry_data.ProfilePage[0].graphql.user.edge_followed_by.count;
-				object['profile'] ['edge_follow'] = userInfo.entry_data.ProfilePage[0].graphql.user.edge_follow.count;
-				object['profile'] ['full_name'] = userInfo.entry_data.ProfilePage[0].graphql.user.full_name;
-				object['profile'] ['profile_pic_url'] = userInfo.entry_data.ProfilePage[0].graphql.user.profile_pic_url;
-				object['profile'] ['username'] = userInfo.entry_data.ProfilePage[0].graphql.user.username;
-				object['profile'] ['edge_owner_to_timeline_media'] = userInfo.entry_data.ProfilePage[0].graphql.user.edge_owner_to_timeline_media.count;
-				object['posts'] = posts;
+				object['profile'] ['id_instagram'] = json.graphql.user.id;
+				object['profile'] ['posts'] = json.graphql.user.edge_owner_to_timeline_media.count;
+				object['profile'] ['biography'] = json.graphql.user.biography;
+				object['profile'] ['external_url'] = json.graphql.user.external_url;
+				object['profile'] ['edge_followed_by'] = json.graphql.user.edge_followed_by.count;
+				object['profile'] ['edge_follow'] = json.graphql.user.edge_follow.count;
+				object['profile'] ['full_name'] = json.graphql.user.full_name;
+				object['profile'] ['profile_pic_url'] = json.graphql.user.profile_pic_url;
+				object['profile'] ['username'] = json.graphql.user.username;
+				object['profile'] ['edge_owner_to_timeline_media'] = json.graphql.user.edge_owner_to_timeline_media.count;
 
 				console.log(object);
 
 				// Response
 				resolve(object);
 
+			})
+			.catch(error => {
+				console.log(error)
+				resolve(object)
 			});
 
 
@@ -109,6 +89,7 @@ class InstagramProfile {
 				
 				// Response
 				resolve(object);
+				console.log(object)
 
                 })
                 .catch(error =>{
